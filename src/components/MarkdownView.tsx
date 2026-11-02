@@ -17,8 +17,8 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
   let tokens: Token[] = [];
   try {
     tokens = marked.lexer(content);
-  } catch (err) {
-    return <div className={`whitespace-pre-wrap ${className}`}>{content}</div>;
+  } catch {
+    return <div className={`whitespace-pre-wrap text-zinc-800 dark:text-zinc-200 ${className}`}>{content}</div>;
   }
 
   const renderInlineTokens = (inlineTokens?: Token[]): React.ReactNode => {
@@ -28,13 +28,13 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
       switch (t.type) {
         case 'strong':
           return (
-            <strong key={idx} className="font-semibold text-zinc-900">
+            <strong key={idx} className="font-semibold text-zinc-900 dark:text-zinc-100">
               {renderInlineTokens((t as Tokens.Strong).tokens)}
             </strong>
           );
         case 'em':
           return (
-            <em key={idx} className="italic text-zinc-800">
+            <em key={idx} className="italic text-zinc-800 dark:text-zinc-200">
               {renderInlineTokens((t as Tokens.Em).tokens)}
             </em>
           );
@@ -42,7 +42,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
           return (
             <code
               key={idx}
-              className="px-1.5 py-0.5 mx-0.5 rounded bg-zinc-100 text-zinc-800 font-mono text-[11px] border border-zinc-200/80"
+              className="px-1.5 py-0.5 mx-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono text-[11px] border border-zinc-200/80 dark:border-zinc-700"
             >
               {(t as Tokens.Codespan).text}
             </code>
@@ -55,7 +55,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#0071e3] hover:underline font-medium"
+              className="text-[#0071e3] dark:text-sky-400 hover:underline font-medium"
             >
               {renderInlineTokens(link.tokens)}
             </a>
@@ -63,7 +63,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
         }
         case 'del':
           return (
-            <del key={idx} className="line-through text-zinc-400">
+            <del key={idx} className="line-through text-zinc-400 dark:text-zinc-500">
               {renderInlineTokens((t as Tokens.Del).tokens)}
             </del>
           );
@@ -86,22 +86,19 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
   };
 
   const renderListItem = (item: Tokens.ListItem, itemIdx: number): React.ReactNode => {
-    // An item may have inline text tokens and nested block tokens (e.g. sub-lists)
     const inlinePart: Token[] = [];
     const blockPart: Token[] = [];
 
     (item.tokens || []).forEach(tok => {
       if (tok.type === 'list') {
         blockPart.push(tok);
-      } else if (tok.type === 'text') {
-        inlinePart.push(tok);
       } else {
         inlinePart.push(tok);
       }
     });
 
     return (
-      <li key={itemIdx} className="leading-relaxed pl-1">
+      <li key={itemIdx} className="leading-relaxed pl-1 text-zinc-800 dark:text-zinc-200">
         {inlinePart.length > 0 ? renderInlineTokens(inlinePart) : item.text}
         {blockPart.map((subToken, subIdx) => renderToken(subToken, subIdx))}
       </li>
@@ -119,7 +116,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
               key={index}
               className={`${
                 compact ? 'text-sm font-bold' : 'text-base sm:text-lg font-bold'
-              } text-zinc-900 font-heading tracking-tight mt-3 mb-1.5 first:mt-0`}
+              } text-zinc-900 dark:text-zinc-100 font-heading tracking-tight mt-3 mb-1.5 first:mt-0`}
             >
               {textContent}
             </h1>
@@ -131,7 +128,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
               key={index}
               className={`${
                 compact ? 'text-xs font-bold' : 'text-sm sm:text-base font-bold'
-              } text-zinc-900 font-heading tracking-tight mt-2.5 mb-1.5 first:mt-0`}
+              } text-zinc-900 dark:text-zinc-100 font-heading tracking-tight mt-2.5 mb-1.5 first:mt-0`}
             >
               {textContent}
             </h2>
@@ -142,7 +139,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
             key={index}
             className={`${
               compact ? 'text-xs font-semibold' : 'text-xs sm:text-sm font-semibold'
-            } text-zinc-900 font-heading mt-2 mb-1 first:mt-0`}
+            } text-zinc-900 dark:text-zinc-100 font-heading mt-2 mb-1 first:mt-0`}
           >
             {textContent}
           </h3>
@@ -156,7 +153,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
             key={index}
             className={`${
               compact ? 'text-xs leading-normal mb-1.5' : 'text-xs sm:text-[13px] leading-relaxed mb-2'
-            } text-zinc-800 last:mb-0 font-sans`}
+            } text-zinc-800 dark:text-zinc-200 last:mb-0 font-sans`}
           >
             {renderInlineTokens(para.tokens) || para.text}
           </p>
@@ -172,7 +169,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
               start={list.start || 1}
               className={`space-y-1 my-2 pl-4 list-decimal ${
                 compact ? 'text-xs' : 'text-xs sm:text-[13px]'
-              } text-zinc-800`}
+              } text-zinc-800 dark:text-zinc-200`}
             >
               {list.items.map((item, itemIdx) => renderListItem(item, itemIdx))}
             </ol>
@@ -183,7 +180,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
             key={index}
             className={`space-y-1 my-2 pl-4 list-disc ${
               compact ? 'text-xs' : 'text-xs sm:text-[13px]'
-            } text-zinc-800`}
+            } text-zinc-800 dark:text-zinc-200`}
           >
             {list.items.map((item, itemIdx) => renderListItem(item, itemIdx))}
           </ul>
@@ -193,27 +190,27 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
       case 'table': {
         const table = token as Tokens.Table;
         return (
-          <div key={index} className="overflow-x-auto my-3 border border-zinc-200 rounded-xl">
-            <table className="min-w-full divide-y divide-zinc-200 text-xs">
-              <thead className="bg-zinc-50">
+          <div key={index} className="overflow-x-auto my-3 border border-zinc-200 dark:border-zinc-800 rounded-xl">
+            <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800 text-xs">
+              <thead className="bg-zinc-50 dark:bg-zinc-800/80">
                 <tr>
                   {table.header.map((th, thIdx) => (
                     <th
                       key={thIdx}
-                      className="px-3 py-2 text-left font-semibold text-zinc-900 border-r border-zinc-100 last:border-r-0"
+                      className="px-3 py-2 text-left font-semibold text-zinc-900 dark:text-zinc-100 border-r border-zinc-100 dark:border-zinc-800 last:border-r-0"
                     >
                       {renderInlineTokens(th.tokens) || th.text}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-100 bg-white">
+              <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800 bg-white dark:bg-zinc-900">
                 {table.rows.map((row, rIdx) => (
-                  <tr key={rIdx} className="hover:bg-zinc-50/50">
+                  <tr key={rIdx} className="hover:bg-zinc-50/50 dark:hover:bg-zinc-800/50">
                     {row.map((cell, cIdx) => (
                       <td
                         key={cIdx}
-                        className="px-3 py-2 text-zinc-700 border-r border-zinc-100 last:border-r-0"
+                        className="px-3 py-2 text-zinc-700 dark:text-zinc-300 border-r border-zinc-100 dark:border-zinc-800 last:border-r-0"
                       >
                         {renderInlineTokens(cell.tokens) || cell.text}
                       </td>
@@ -231,7 +228,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
         return (
           <pre
             key={index}
-            className="p-3 my-2 bg-zinc-900 text-zinc-100 rounded-xl font-mono text-[11px] overflow-x-auto leading-relaxed border border-zinc-800"
+            className="p-3 my-2 bg-zinc-900 dark:bg-zinc-950 text-zinc-100 rounded-xl font-mono text-[11px] overflow-x-auto leading-relaxed border border-zinc-800"
           >
             <code>{code.text}</code>
           </pre>
@@ -243,7 +240,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
         return (
           <blockquote
             key={index}
-            className="border-l-2 border-zinc-300 pl-3 my-2 italic text-zinc-600 text-xs sm:text-[13px]"
+            className="border-l-2 border-zinc-300 dark:border-zinc-700 pl-3 my-2 italic text-zinc-600 dark:text-zinc-400 text-xs sm:text-[13px]"
           >
             {quote.tokens
               ? quote.tokens.map((t, idx) => renderToken(t, idx))
@@ -253,7 +250,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
       }
 
       case 'hr':
-        return <hr key={index} className="my-3 border-t border-zinc-200" />;
+        return <hr key={index} className="my-3 border-t border-zinc-200 dark:border-zinc-800" />;
 
       case 'space':
         return null;
@@ -262,7 +259,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
         return (
           <p
             key={index}
-            className="text-xs sm:text-[13px] leading-relaxed text-zinc-800 mb-2 last:mb-0"
+            className="text-xs sm:text-[13px] leading-relaxed text-zinc-800 dark:text-zinc-200 mb-2 last:mb-0"
           >
             {(token as any).text || ''}
           </p>
@@ -271,7 +268,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
   };
 
   return (
-    <div className={`space-y-1 text-zinc-800 ${className}`}>
+    <div className={`space-y-1 text-zinc-800 dark:text-zinc-200 ${className}`}>
       {tokens.map((token, idx) => renderToken(token, idx))}
     </div>
   );

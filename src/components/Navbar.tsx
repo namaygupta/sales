@@ -8,6 +8,7 @@ import {
   Sun,
   Moon,
   TrendingUp,
+  CircleDollarSign,
 } from 'lucide-react';
 
 export type AppSection = 'general' | 'admin';
@@ -54,28 +55,28 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <header className="border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md sticky top-0 z-30 transition-colors duration-200">
       {/* Top Bar: Brand, Search, AI, and Section Switcher */}
-      <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2.5 flex items-center justify-between gap-2 sm:gap-3">
         {/* Brand & Section Switcher */}
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-xl bg-zinc-900 dark:bg-zinc-100 flex items-center justify-center text-white dark:text-zinc-950 shadow-sm font-bold text-xs tracking-tighter">
-            NG
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="w-8 h-8 rounded-xl bg-zinc-900 dark:bg-zinc-100 flex items-center justify-center text-emerald-400 dark:text-emerald-600 shadow-sm shrink-0">
+            <CircleDollarSign className="w-4.5 h-4.5" />
           </div>
 
-          <div className="flex flex-col">
-            <span className="font-bold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 font-heading">
+          <div className="flex flex-col min-w-0">
+            <span className="font-bold text-xs sm:text-sm tracking-tight text-zinc-900 dark:text-zinc-100 font-heading truncate">
               Namay&apos;s Sales Tracker
             </span>
           </div>
 
           {/* Top-level Section Switcher (General vs Admin) */}
-          <div className="ml-2 sm:ml-4 bg-zinc-100 dark:bg-zinc-900 p-0.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800 flex items-center">
+          <div className="ml-1 sm:ml-4 bg-zinc-100 dark:bg-zinc-900 p-0.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800 flex items-center shrink-0">
             <button
               type="button"
               onClick={() => {
                 onClearSelectedClient();
                 onSectionChange('general');
               }}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+              className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
                 section === 'general'
                   ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs'
                   : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
@@ -89,7 +90,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClearSelectedClient();
                 onSectionChange('admin');
               }}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all flex items-center gap-1 cursor-pointer ${
+              className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-lg transition-all flex items-center gap-1 cursor-pointer ${
                 section === 'admin'
                   ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs'
                   : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
@@ -102,13 +103,13 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Action Controls: Theme Toggle, Search, AI Assistant, Namay Avatar */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {/* Dark / Light Mode Toggle */}
           <motion.button
             type="button"
             whileTap={{ scale: 0.92 }}
             onClick={onToggleDarkMode}
-            className="p-2 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 rounded-xl transition-colors cursor-pointer border border-zinc-200/60 dark:border-zinc-800"
+            className="p-1.5 sm:p-2 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 rounded-xl transition-colors cursor-pointer border border-zinc-200/60 dark:border-zinc-800"
             title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             aria-label="Toggle dark mode"
           >
@@ -122,7 +123,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={onOpenSearch}
-            className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 text-xs text-zinc-500 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100 border border-zinc-200/80 dark:border-zinc-800 rounded-xl transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 text-xs text-zinc-500 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100 border border-zinc-200/80 dark:border-zinc-800 rounded-xl transition-colors cursor-pointer"
             title="Global Search (Press to search clients, leads, orders)"
           >
             <Search className="w-3.5 h-3.5" />
@@ -133,7 +134,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             type="button"
             whileTap={{ scale: 0.96 }}
             onClick={onOpenAiAssistant}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-zinc-900 hover:bg-black dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white rounded-xl shadow-xs transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-white bg-zinc-900 hover:bg-black dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white rounded-xl shadow-xs transition-colors cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5 text-sky-400 dark:text-sky-600" />
             <span className="hidden sm:inline">Ask AI</span>
@@ -154,7 +155,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Secondary Bar: General Navigation Tabs with smooth indicator */}
       {section === 'general' && (
         <div className="border-t border-zinc-100 dark:border-zinc-800/60 bg-zinc-50/60 dark:bg-zinc-900/60 transition-colors">
-          <div className="max-w-7xl mx-auto px-4 py-1.5 flex items-center gap-1 overflow-x-auto scrollbar-none">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 py-1.5 flex items-center gap-1 overflow-x-auto scrollbar-none touch-pan-x">
             {[
               { id: 'dashboard' as GeneralSubTab, label: 'Dashboard' },
               { id: 'clients' as GeneralSubTab, label: `Clients (${clientsCount})` },

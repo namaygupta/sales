@@ -130,19 +130,19 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
             className="absolute inset-0 bg-black/50 backdrop-blur-xs"
           />
 
-          <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+          <div className="fixed inset-y-0 right-0 w-full sm:max-w-md flex">
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="w-screen max-w-md bg-white dark:bg-zinc-900 border-l border-zinc-200 dark:border-zinc-800 shadow-2xl flex flex-col justify-between"
+              className="w-full bg-white dark:bg-zinc-900 border-l border-zinc-200 dark:border-zinc-800 shadow-2xl flex flex-col justify-between h-full"
             >
               {/* Header */}
-              <div className="p-4 sm:p-5 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+              <div className="p-4 sm:p-5 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 flex items-center justify-center">
-                    <Sparkles className="w-4 h-4 text-sky-400 dark:text-sky-600" />
+                    <Sparkles className="w-4 h-4 text-[#0071e3] dark:text-sky-500" />
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 font-heading">
@@ -175,7 +175,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
                     <div
                       className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 text-xs ${
                         msg.sender === 'user'
-                          ? 'bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-zinc-100'
+                          ? 'bg-[#0071e3] text-white'
                           : 'bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900'
                       }`}
                     >
@@ -185,8 +185,8 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
                     <div
                       className={`max-w-[85%] rounded-2xl p-3 text-xs leading-relaxed ${
                         msg.sender === 'user'
-                          ? 'bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 whitespace-pre-wrap font-medium'
-                          : 'bg-zinc-50 dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/60 text-zinc-800 dark:text-zinc-200 font-sans'
+                          ? 'bg-[#0071e3] text-white whitespace-pre-wrap font-medium'
+                          : 'bg-zinc-100 dark:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-700/80 text-zinc-900 dark:text-zinc-100 font-sans shadow-2xs'
                       }`}
                     >
                       {msg.sender === 'user' ? (
@@ -199,22 +199,22 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
                 ))}
 
                 {isLoading && (
-                  <div className="flex items-center gap-2 text-xs text-zinc-400 dark:text-zinc-500 py-2">
-                    <Bot className="w-4 h-4 animate-pulse text-sky-500" />
+                  <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 py-2">
+                    <Bot className="w-4 h-4 animate-pulse text-[#0071e3]" />
                     <span>Namay&apos;s AI is reviewing your accounts...</span>
                   </div>
                 )}
               </div>
 
               {/* Quick Prompts & Input Area */}
-              <div className="p-4 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/50 space-y-3">
+              <div className="p-4 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/70 space-y-3 shrink-0">
                 <div className="flex flex-wrap gap-1.5">
                   {quickPrompts.map((qp, idx) => (
                     <button
                       key={idx}
                       type="button"
                       onClick={() => handleSend(qp)}
-                      className="text-[11px] px-2.5 py-1 bg-white dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-750 text-zinc-700 dark:text-zinc-300 border border-zinc-200/80 dark:border-zinc-700 rounded-lg text-left transition-colors cursor-pointer"
+                      className="text-[11px] px-2.5 py-1.5 bg-white dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 border border-zinc-200/80 dark:border-zinc-700 rounded-xl text-left transition-colors cursor-pointer"
                     >
                       {qp}
                     </button>
@@ -233,13 +233,13 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
                     value={inputQuery}
                     onChange={e => setInputQuery(e.target.value)}
                     placeholder="Ask about clients, sales, or strategy..."
-                    className="flex-1 px-3.5 py-2.5 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 dark:focus:border-zinc-300"
+                    className="flex-1 px-3.5 py-2.5 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-[#0071e3]"
                   />
                   <motion.button
                     type="submit"
                     whileTap={{ scale: 0.95 }}
                     disabled={isLoading || !inputQuery.trim()}
-                    className="p-2.5 bg-zinc-900 hover:bg-black dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white text-white rounded-xl disabled:opacity-40 cursor-pointer transition-colors shadow-xs"
+                    className="p-2.5 bg-[#0071e3] hover:bg-[#0077ed] text-white rounded-xl disabled:opacity-40 cursor-pointer transition-colors shadow-xs"
                   >
                     <Send className="w-4 h-4" />
                   </motion.button>

@@ -27,6 +27,7 @@ interface DashboardChartsProps {
   showQuickStats?: boolean;
   showInventoryAlerts?: boolean;
   onNavigateToTab?: (tab: string) => void;
+  isDark?: boolean;
 }
 
 type TimeRange = '30' | '90' | '365';
@@ -44,10 +45,13 @@ export const DashboardCharts: React.FC<DashboardChartsProps> = ({
   showQuickStats = true,
   showInventoryAlerts = true,
   onNavigateToTab,
+  isDark: isDarkProp,
 }) => {
   const [timeRange, setTimeRange] = useState<TimeRange>('90');
 
-  const isDark = typeof document !== 'undefined' && document.documentElement.classList.contains('dark');
+  const isDark =
+    isDarkProp ??
+    (typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
 
   // Low inventory items
   const lowStockItems = useMemo(() => {

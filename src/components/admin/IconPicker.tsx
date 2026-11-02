@@ -52,7 +52,7 @@ interface IconPickerProps {
 
 export const IconPicker: React.FC<IconPickerProps> = ({ value, onChange }) => {
   return (
-    <div className="grid grid-cols-6 sm:grid-cols-9 gap-1.5 p-2 bg-zinc-50 border border-zinc-200 rounded-xl max-h-36 overflow-y-auto">
+    <div className="grid grid-cols-6 sm:grid-cols-9 gap-1.5 p-2 bg-zinc-50 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700 rounded-xl max-h-36 overflow-y-auto">
       {ICON_OPTIONS.map(opt => {
         const IconComp = opt.icon;
         const isSelected = value === opt.name;
@@ -64,8 +64,8 @@ export const IconPicker: React.FC<IconPickerProps> = ({ value, onChange }) => {
             onClick={() => onChange(opt.name)}
             className={`p-2 rounded-lg flex flex-col items-center justify-center transition-all cursor-pointer ${
               isSelected
-                ? 'bg-zinc-900 text-white shadow-xs'
-                : 'text-zinc-600 hover:bg-zinc-200/60 hover:text-zinc-900'
+                ? 'bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-950 shadow-xs'
+                : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/60 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-100'
             }`}
           >
             <IconComp className="w-4 h-4" />

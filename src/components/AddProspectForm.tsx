@@ -35,7 +35,7 @@ export const AddProspectForm: React.FC<AddProspectFormProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl max-w-lg w-full p-5 sm:p-6 text-zinc-900 dark:text-zinc-100 shadow-xl">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-5 sm:p-6 text-zinc-900 dark:text-zinc-100 shadow-xl">
         <div className="flex items-center justify-between pb-3 border-b border-zinc-100 dark:border-zinc-800 mb-4">
           <h2 className="text-base font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
             {initialData?.business_name ? 'Edit Prospect' : 'Add New Prospect'}

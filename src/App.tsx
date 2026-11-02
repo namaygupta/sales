@@ -618,6 +618,7 @@ export default function App() {
                       showTopClients={dashboardConfig.showTopClients !== false}
                       showQuickStats={dashboardConfig.showQuickStats !== false}
                       showInventoryAlerts={dashboardConfig.showInventoryAlerts !== false}
+                      isDark={isDarkMode}
                       onNavigateToTab={tab => {
                         if (tab === 'admin') setSection('admin');
                       }}
