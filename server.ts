@@ -81,6 +81,49 @@ function generateFallbackQueryAnswer(query: string, context: any): string {
   const openTasks = context?.recentOpenTasks || [];
   const lowStockCount = context?.lowStockItemsCount || 0;
 
+  if (
+    q.includes('pitch') ||
+    q.includes('script') ||
+    q.includes('coffee') ||
+    q.includes('restaurant') ||
+    q.includes('retail') ||
+    q.includes('demo') ||
+    q.includes('say')
+  ) {
+    return `### 🏪 In-Person NFC Stand Pitch for Local Businesses
+
+1. **The 10-Second Hook**:
+   *"Hey [Owner/Manager], quick question: what percentage of your happy customers actually leave a Google review? Most say less than 2%."*
+
+2. **The Live Tap Demo**:
+   Pull out an active card or stand from your pocket:
+   *"Tap your iPhone right here. Notice how it instantly opens your exact Google review page with 5 stars selected in one second—no typing, no searching."*
+
+3. **The ROI Close**:
+   *"Just 3 new reviews a week pushes you to the top 3 on Google Maps. We supply 2 counter stands plus setup for $150 flat—takes 5 minutes to launch."*
+
+**Pro Tip**: Always carry a programmed demo card in your pocket. Handing it to the owner to tap closes 70%+ of retail pitches on the spot.`;
+  }
+
+  if (q.includes('priority') || q.includes('task') || q.includes('follow') || q.includes('urgent')) {
+    let res = `### ⚡ Current Priority Pipeline Focus\n\n`;
+    if (openTasks.length > 0) {
+      res += `You have **${openTasks.length} pending follow-ups** requiring attention:\n\n`;
+      openTasks.forEach((t: any, idx: number) => {
+        const due = t.due_date ? ` *(Due: ${t.due_date})*` : '';
+        res += `${idx + 1}. **${t.description}** — Type: \`${t.type}\`${due}\n`;
+      });
+    } else {
+      res += `All follow-up tasks are currently clear. Prioritize cold outreach or follow-up calls with prospects in your pipeline.\n`;
+    }
+
+    if (lowStockCount > 0) {
+      res += `\n⚠️ **Inventory Alert**: ${lowStockCount} hardware stock item(s) are below threshold. Reorder NFC blanks to avoid delivery delays.\n`;
+    }
+
+    return res;
+  }
+
   if (q.includes('upsell') || q.includes('nfc') || q.includes('candidate')) {
     const webOnly = clients.filter((c: any) => c.bought_website && !c.bought_accessory);
     const nfcOnly = clients.filter((c: any) => !c.bought_website && c.bought_accessory);
@@ -108,47 +151,6 @@ function generateFallbackQueryAnswer(query: string, context: any): string {
 
     res += `\n**Recommended Action**: Call web-only clients this week offering a bundle discount on a 2-pack of Google NFC stands.`;
     return res;
-  }
-
-  if (q.includes('priority') || q.includes('task') || q.includes('follow') || q.includes('urgent')) {
-    let res = `### ⚡ Current Priority Pipeline Focus\n\n`;
-    if (openTasks.length > 0) {
-      res += `You have **${openTasks.length} pending follow-ups** requiring attention:\n\n`;
-      openTasks.forEach((t: any, idx: number) => {
-        const due = t.due_date ? ` *(Due: ${t.due_date})*` : '';
-        res += `${idx + 1}. **${t.description}** — Type: \`${t.type}\`${due}\n`;
-      });
-    } else {
-      res += `All follow-up tasks are currently clear. Prioritize cold outreach or follow-up calls with prospects in your pipeline.\n`;
-    }
-
-    if (lowStockCount > 0) {
-      res += `\n⚠️ **Inventory Alert**: ${lowStockCount} hardware stock item(s) are below threshold. Reorder NFC blanks to avoid delivery delays.\n`;
-    }
-
-    return res;
-  }
-
-  if (
-    q.includes('pitch') ||
-    q.includes('coffee') ||
-    q.includes('restaurant') ||
-    q.includes('retail') ||
-    q.includes('demo')
-  ) {
-    return `### 🏪 In-Person NFC Stand Pitch for Local Businesses
-
-1. **The 10-Second Hook**:
-   *"Hey [Owner/Manager], quick question: what percentage of your happy customers actually leave a Google review? Most say less than 2%."*
-
-2. **The Live Tap Demo**:
-   Pull out an active card or stand from your pocket:
-   *"Tap your iPhone right here. Notice how it instantly opens your exact Google review page with 5 stars selected in one second—no typing, no searching."*
-
-3. **The ROI Close**:
-   *"Just 3 new reviews a week pushes you to the top 3 on Google Maps. We supply 2 counter stands plus setup for $150 flat—takes 5 minutes to launch."*
-
-**Pro Tip**: Always carry a programmed demo card in your pocket. Handing it to the owner to tap closes 70%+ of retail pitches on the spot.`;
   }
 
   return `### 📊 Executive Sales Advisory for Namay

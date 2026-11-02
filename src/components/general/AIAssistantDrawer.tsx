@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, X, Send, Bot, User, ArrowRight } from 'lucide-react';
 import { Client, Order, TaskItem, InventoryItem } from '../../types/index';
 import { MarkdownView } from '../MarkdownView';
+import { querySalesAssistant } from '../../lib/aiAssistant';
 
 interface AIAssistantDrawerProps {
   isOpen: boolean;
@@ -37,7 +38,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
   const [inputQuery, setInputQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Business snapshot to supply to the server-side Gemini call
+  // Business snapshot to supply to the sales assistant
   const buildContextSnapshot = () => {
     const totalRev = orders.reduce((s, o) => s + (Number(o.amount) || 0), 0);
     const lowStock = inventoryItems.filter(i => i.quantity_on_hand <= i.reorder_threshold);
@@ -78,24 +79,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/ai/query', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: q,
-          context: buildContextSnapshot(),
-        }),
-      });
-
-      const rawText = await res.text();
-      let data: any = {};
-      try {
-        data = JSON.parse(rawText);
-      } catch {
-        data = { answer: rawText };
-      }
-
-      const answerText = data.answer || data.error || 'Sales assistant is ready. How can I help you?';
+      const answerText = await querySalesAssistant(q, buildContextSnapshot());
 
       const aiMsg: Message = {
         id: crypto.randomUUID(),

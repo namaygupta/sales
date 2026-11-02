@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { StickyNote, Sparkles, Plus, Pencil, Trash2, X, Tag, Lightbulb, ArrowRight, Check } from 'lucide-react';
 import { NoteItem } from '../../types/index';
 import { MarkdownView } from '../MarkdownView';
+import { analyzeSalesNotes } from '../../lib/aiAssistant';
 
 interface NotesMemoryViewProps {
   notes: NoteItem[];
@@ -81,21 +82,7 @@ export const NotesMemoryView: React.FC<NotesMemoryViewProps> = ({
     setIsAnalyzing(true);
     setAiError(null);
     try {
-      const res = await fetch('/api/ai/analyze-notes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ notes }),
-      });
-
-      const rawText = await res.text();
-      let data: any = {};
-      try {
-        data = JSON.parse(rawText);
-      } catch {
-        data = { analysis: rawText };
-      }
-
-      const analysisText = data.analysis || data.error || 'No analysis generated. Please try again.';
+      const analysisText = await analyzeSalesNotes(notes);
       setAiAnalysis(analysisText);
     } catch {
       setAiError('Unable to synthesize notes at this moment. Please try again.');
