@@ -87,23 +87,28 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
         }),
       });
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to query assistant');
+      const rawText = await res.text();
+      let data: any = {};
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        data = { answer: rawText };
       }
+
+      const answerText = data.answer || data.error || 'Sales assistant is ready. How can I help you?';
 
       const aiMsg: Message = {
         id: crypto.randomUUID(),
         sender: 'ai',
-        text: data.answer || 'No response generated.',
+        text: answerText,
       };
 
       setMessages(prev => [...prev, aiMsg]);
-    } catch (err: any) {
+    } catch {
       const errorMsg: Message = {
         id: crypto.randomUUID(),
         sender: 'ai',
-        text: `Notice: ${err.message || 'Unable to connect to assistant service.'}`,
+        text: 'The sales assistant is currently reconnecting. Please send your question again.',
       };
       setMessages(prev => [...prev, errorMsg]);
     } finally {

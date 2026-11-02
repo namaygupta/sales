@@ -123,31 +123,37 @@ export class DataRepository {
   // ================= CLIENTS =================
   static async getClients(): Promise<Client[]> {
     if (isSupabaseConfigured && supabase) {
-      const { data, error } = await supabase
-        .from('clients')
-        .select('*')
-        .order('created_at', { ascending: false });
+      try {
+        const { data, error } = await supabase
+          .from('clients')
+          .select('*')
+          .order('created_at', { ascending: false });
 
-      if (error) {
-        throw new Error(`Supabase error loading clients: ${error.message}`);
+        if (error) {
+          console.warn('Supabase clients fetch notice:', error.message);
+          return getLocal<Client[]>(STORAGE_KEYS.CLIENTS, []);
+        }
+
+        const clients: Client[] = (data || []).map((row: any) => ({
+          id: row.id,
+          business_name: row.business_name || '',
+          contact_name: row.contact_name || '',
+          contact_phone: row.contact_phone || '',
+          contact_email: row.contact_email || '',
+          website_url: row.website_url || '',
+          bought_website: Boolean(row.bought_website),
+          bought_accessory: Boolean(row.bought_accessory),
+          deal_type: row.deal_type || 'one_time_flat',
+          notes: row.notes || '',
+          created_at: row.created_at || new Date().toISOString(),
+        }));
+
+        setLocal(STORAGE_KEYS.CLIENTS, clients);
+        return clients;
+      } catch (err) {
+        console.warn('Supabase clients exception:', err);
+        return getLocal<Client[]>(STORAGE_KEYS.CLIENTS, []);
       }
-
-      const clients: Client[] = (data || []).map((row: any) => ({
-        id: row.id,
-        business_name: row.business_name || '',
-        contact_name: row.contact_name || '',
-        contact_phone: row.contact_phone || '',
-        contact_email: row.contact_email || '',
-        website_url: row.website_url || '',
-        bought_website: Boolean(row.bought_website),
-        bought_accessory: Boolean(row.bought_accessory),
-        deal_type: row.deal_type || 'one_time_flat',
-        notes: row.notes || '',
-        created_at: row.created_at || new Date().toISOString(),
-      }));
-
-      setLocal(STORAGE_KEYS.CLIENTS, clients);
-      return clients;
     }
 
     return getLocal<Client[]>(STORAGE_KEYS.CLIENTS, []);
@@ -277,27 +283,33 @@ export class DataRepository {
   // ================= ORDERS =================
   static async getOrders(): Promise<Order[]> {
     if (isSupabaseConfigured && supabase) {
-      const { data, error } = await supabase
-        .from('orders')
-        .select('*')
-        .order('order_date', { ascending: false });
+      try {
+        const { data, error } = await supabase
+          .from('orders')
+          .select('*')
+          .order('order_date', { ascending: false });
 
-      if (error) {
-        throw new Error(`Supabase error loading orders: ${error.message}`);
+        if (error) {
+          console.warn('Supabase orders fetch notice:', error.message);
+          return getLocal<Order[]>(STORAGE_KEYS.ORDERS, []);
+        }
+
+        const orders: Order[] = (data || []).map((row: any) => ({
+          id: row.id,
+          client_id: row.client_id,
+          item_type: row.item_type || 'other',
+          amount: Number(row.amount) || 0,
+          order_date: row.order_date || new Date().toISOString().split('T')[0],
+          notes: row.notes || '',
+          created_at: row.created_at || new Date().toISOString(),
+        }));
+
+        setLocal(STORAGE_KEYS.ORDERS, orders);
+        return orders;
+      } catch (err) {
+        console.warn('Supabase orders exception:', err);
+        return getLocal<Order[]>(STORAGE_KEYS.ORDERS, []);
       }
-
-      const orders: Order[] = (data || []).map((row: any) => ({
-        id: row.id,
-        client_id: row.client_id,
-        item_type: row.item_type || 'other',
-        amount: Number(row.amount) || 0,
-        order_date: row.order_date || new Date().toISOString().split('T')[0],
-        notes: row.notes || '',
-        created_at: row.created_at || new Date().toISOString(),
-      }));
-
-      setLocal(STORAGE_KEYS.ORDERS, orders);
-      return orders;
     }
 
     return getLocal<Order[]>(STORAGE_KEYS.ORDERS, []);
@@ -360,28 +372,34 @@ export class DataRepository {
   // ================= PROSPECTS =================
   static async getProspects(): Promise<Prospect[]> {
     if (isSupabaseConfigured && supabase) {
-      const { data, error } = await supabase
-        .from('prospects')
-        .select('*')
-        .order('created_at', { ascending: false });
+      try {
+        const { data, error } = await supabase
+          .from('prospects')
+          .select('*')
+          .order('created_at', { ascending: false });
 
-      if (error) {
-        throw new Error(`Supabase error loading prospects: ${error.message}`);
+        if (error) {
+          console.warn('Supabase prospects fetch notice:', error.message);
+          return getLocal<Prospect[]>(STORAGE_KEYS.PROSPECTS, []);
+        }
+
+        const prospects: Prospect[] = (data || []).map((row: any) => ({
+          id: row.id,
+          business_name: row.business_name || '',
+          contact_name: row.contact_name || '',
+          contact_phone: row.contact_phone || '',
+          contact_email: row.contact_email || '',
+          notes: row.notes || '',
+          status: row.status || 'not_contacted',
+          created_at: row.created_at || new Date().toISOString(),
+        }));
+
+        setLocal(STORAGE_KEYS.PROSPECTS, prospects);
+        return prospects;
+      } catch (err) {
+        console.warn('Supabase prospects exception:', err);
+        return getLocal<Prospect[]>(STORAGE_KEYS.PROSPECTS, []);
       }
-
-      const prospects: Prospect[] = (data || []).map((row: any) => ({
-        id: row.id,
-        business_name: row.business_name || '',
-        contact_name: row.contact_name || '',
-        contact_phone: row.contact_phone || '',
-        contact_email: row.contact_email || '',
-        notes: row.notes || '',
-        status: row.status || 'not_contacted',
-        created_at: row.created_at || new Date().toISOString(),
-      }));
-
-      setLocal(STORAGE_KEYS.PROSPECTS, prospects);
-      return prospects;
     }
 
     return getLocal<Prospect[]>(STORAGE_KEYS.PROSPECTS, []);
@@ -493,20 +511,26 @@ export class DataRepository {
   // ================= CATEGORIES / PRODUCTS =================
   static async getCategories(): Promise<Category[]> {
     if (isSupabaseConfigured && supabase) {
-      const { data, error } = await supabase.from('categories').select('*').order('name');
-      if (error) {
-        throw new Error(`Supabase error loading categories: ${error.message}`);
+      try {
+        const { data, error } = await supabase.from('categories').select('*').order('name');
+        if (error) {
+          console.warn('Supabase categories fetch notice:', error.message);
+          return getLocal<Category[]>(STORAGE_KEYS.CATEGORIES, []);
+        }
+        const loaded: Category[] = (data || []).map((c: any) => ({
+          id: c.id,
+          name: c.name,
+          icon: c.icon || 'tag',
+          description: c.description || '',
+          default_amount: c.default_amount != null ? Number(c.default_amount) : undefined,
+          cost_amount: c.cost_amount != null ? Number(c.cost_amount) : 0,
+        }));
+        setLocal(STORAGE_KEYS.CATEGORIES, loaded);
+        return loaded;
+      } catch (err) {
+        console.warn('Supabase categories exception:', err);
+        return getLocal<Category[]>(STORAGE_KEYS.CATEGORIES, []);
       }
-      const loaded: Category[] = (data || []).map((c: any) => ({
-        id: c.id,
-        name: c.name,
-        icon: c.icon || 'tag',
-        description: c.description || '',
-        default_amount: c.default_amount != null ? Number(c.default_amount) : undefined,
-        cost_amount: c.cost_amount != null ? Number(c.cost_amount) : 0,
-      }));
-      setLocal(STORAGE_KEYS.CATEGORIES, loaded);
-      return loaded;
     }
 
     return getLocal<Category[]>(STORAGE_KEYS.CATEGORIES, []);
@@ -612,27 +636,33 @@ export class DataRepository {
   // ================= INVENTORY ITEMS =================
   static async getInventoryItems(): Promise<InventoryItem[]> {
     if (isSupabaseConfigured && supabase) {
-      const { data, error } = await supabase
-        .from('inventory_items')
-        .select('*')
-        .order('item_name');
+      try {
+        const { data, error } = await supabase
+          .from('inventory_items')
+          .select('*')
+          .order('item_name');
 
-      if (error) {
-        throw new Error(`Supabase error loading inventory: ${error.message}`);
+        if (error) {
+          console.warn('Supabase inventory fetch notice:', error.message);
+          return getLocal<InventoryItem[]>(STORAGE_KEYS.INVENTORY, []);
+        }
+
+        const items: InventoryItem[] = (data || []).map((row: any) => ({
+          id: row.id,
+          category_id: row.category_id || null,
+          item_name: row.item_name || '',
+          quantity_on_hand: Number(row.quantity_on_hand) || 0,
+          reorder_threshold: Number(row.reorder_threshold) || 5,
+          notes: row.notes || '',
+          updated_at: row.updated_at || new Date().toISOString(),
+        }));
+
+        setLocal(STORAGE_KEYS.INVENTORY, items);
+        return items;
+      } catch (err) {
+        console.warn('Supabase inventory exception:', err);
+        return getLocal<InventoryItem[]>(STORAGE_KEYS.INVENTORY, []);
       }
-
-      const items: InventoryItem[] = (data || []).map((row: any) => ({
-        id: row.id,
-        category_id: row.category_id || null,
-        item_name: row.item_name || '',
-        quantity_on_hand: Number(row.quantity_on_hand) || 0,
-        reorder_threshold: Number(row.reorder_threshold) || 5,
-        notes: row.notes || '',
-        updated_at: row.updated_at || new Date().toISOString(),
-      }));
-
-      setLocal(STORAGE_KEYS.INVENTORY, items);
-      return items;
     }
 
     return getLocal<InventoryItem[]>(STORAGE_KEYS.INVENTORY, []);
@@ -747,27 +777,33 @@ export class DataRepository {
   // ================= TASKS =================
   static async getTasks(): Promise<TaskItem[]> {
     if (isSupabaseConfigured && supabase) {
-      const { data, error } = await supabase
-        .from('tasks')
-        .select('*')
-        .order('created_at', { ascending: false });
+      try {
+        const { data, error } = await supabase
+          .from('tasks')
+          .select('*')
+          .order('created_at', { ascending: false });
 
-      if (error) {
-        throw new Error(`Supabase error loading tasks: ${error.message}`);
+        if (error) {
+          console.warn('Supabase tasks fetch notice:', error.message);
+          return getLocal<TaskItem[]>(STORAGE_KEYS.TASKS, []);
+        }
+
+        const tasks: TaskItem[] = (data || []).map((row: any) => ({
+          id: row.id,
+          client_id: row.client_id || null,
+          task_type: (row.task_type as TaskType) || 'other',
+          description: row.description || '',
+          due_date: row.due_date || null,
+          status: (row.status as TaskStatus) || 'open',
+          created_at: row.created_at || new Date().toISOString(),
+        }));
+
+        setLocal(STORAGE_KEYS.TASKS, tasks);
+        return tasks;
+      } catch (err) {
+        console.warn('Supabase tasks exception:', err);
+        return getLocal<TaskItem[]>(STORAGE_KEYS.TASKS, []);
       }
-
-      const tasks: TaskItem[] = (data || []).map((row: any) => ({
-        id: row.id,
-        client_id: row.client_id || null,
-        task_type: (row.task_type as TaskType) || 'other',
-        description: row.description || '',
-        due_date: row.due_date || null,
-        status: (row.status as TaskStatus) || 'open',
-        created_at: row.created_at || new Date().toISOString(),
-      }));
-
-      setLocal(STORAGE_KEYS.TASKS, tasks);
-      return tasks;
     }
 
     return getLocal<TaskItem[]>(STORAGE_KEYS.TASKS, []);
@@ -852,27 +888,33 @@ export class DataRepository {
   // ================= SALES SCRIPTS =================
   static async getScripts(): Promise<SalesScript[]> {
     if (isSupabaseConfigured && supabase) {
-      const { data, error } = await supabase
-        .from('scripts')
-        .select('*')
-        .order('title');
+      try {
+        const { data, error } = await supabase
+          .from('scripts')
+          .select('*')
+          .order('title');
 
-      if (error) {
-        throw new Error(`Supabase error loading scripts: ${error.message}`);
+        if (error) {
+          console.warn('Supabase scripts fetch notice:', error.message);
+          return getLocal<SalesScript[]>(STORAGE_KEYS.SCRIPTS, []);
+        }
+
+        const scripts: SalesScript[] = (data || []).map((row: any) => ({
+          id: row.id,
+          title: row.title || '',
+          content: row.content || '',
+          category_id: row.category_id || null,
+          effectiveness: (row.effectiveness as ScriptEffectiveness) || 'testing',
+          notes: row.notes || '',
+          updated_at: row.updated_at || new Date().toISOString(),
+        }));
+
+        setLocal(STORAGE_KEYS.SCRIPTS, scripts);
+        return scripts;
+      } catch (err) {
+        console.warn('Supabase scripts exception:', err);
+        return getLocal<SalesScript[]>(STORAGE_KEYS.SCRIPTS, []);
       }
-
-      const scripts: SalesScript[] = (data || []).map((row: any) => ({
-        id: row.id,
-        title: row.title || '',
-        content: row.content || '',
-        category_id: row.category_id || null,
-        effectiveness: (row.effectiveness as ScriptEffectiveness) || 'testing',
-        notes: row.notes || '',
-        updated_at: row.updated_at || new Date().toISOString(),
-      }));
-
-      setLocal(STORAGE_KEYS.SCRIPTS, scripts);
-      return scripts;
     }
 
     return getLocal<SalesScript[]>(STORAGE_KEYS.SCRIPTS, []);
@@ -987,27 +1029,33 @@ export class DataRepository {
   // ================= EMPLOYEES =================
   static async getEmployees(): Promise<Employee[]> {
     if (isSupabaseConfigured && supabase) {
-      const { data, error } = await supabase
-        .from('employees')
-        .select('*')
-        .order('name');
+      try {
+        const { data, error } = await supabase
+          .from('employees')
+          .select('*')
+          .order('name');
 
-      if (error) {
-        throw new Error(`Supabase error loading employees: ${error.message}`);
+        if (error) {
+          console.warn('Supabase employees fetch notice:', error.message);
+          return getLocal<Employee[]>(STORAGE_KEYS.EMPLOYEES, []);
+        }
+
+        const employees: Employee[] = (data || []).map((row: any) => ({
+          id: row.id,
+          name: row.name || '',
+          role: row.role || '',
+          contact_phone: row.contact_phone || '',
+          contact_email: row.contact_email || '',
+          notes: row.notes || '',
+          created_at: row.created_at || new Date().toISOString(),
+        }));
+
+        setLocal(STORAGE_KEYS.EMPLOYEES, employees);
+        return employees;
+      } catch (err) {
+        console.warn('Supabase employees exception:', err);
+        return getLocal<Employee[]>(STORAGE_KEYS.EMPLOYEES, []);
       }
-
-      const employees: Employee[] = (data || []).map((row: any) => ({
-        id: row.id,
-        name: row.name || '',
-        role: row.role || '',
-        contact_phone: row.contact_phone || '',
-        contact_email: row.contact_email || '',
-        notes: row.notes || '',
-        created_at: row.created_at || new Date().toISOString(),
-      }));
-
-      setLocal(STORAGE_KEYS.EMPLOYEES, employees);
-      return employees;
     }
 
     return getLocal<Employee[]>(STORAGE_KEYS.EMPLOYEES, []);

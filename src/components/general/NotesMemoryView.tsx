@@ -86,13 +86,19 @@ export const NotesMemoryView: React.FC<NotesMemoryViewProps> = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ notes }),
       });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to analyze notes');
+
+      const rawText = await res.text();
+      let data: any = {};
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        data = { analysis: rawText };
       }
-      setAiAnalysis(data.analysis);
-    } catch (err: any) {
-      setAiError(err.message || 'Error communicating with AI service');
+
+      const analysisText = data.analysis || data.error || 'No analysis generated. Please try again.';
+      setAiAnalysis(analysisText);
+    } catch {
+      setAiError('Unable to synthesize notes at this moment. Please try again.');
     } finally {
       setIsAnalyzing(false);
     }
