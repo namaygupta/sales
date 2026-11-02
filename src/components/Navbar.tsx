@@ -1,14 +1,11 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import {
-  BarChart3,
   Search,
   Sparkles,
   Shield,
   Sun,
   Moon,
-  TrendingUp,
-  CircleDollarSign,
 } from 'lucide-react';
 
 export type AppSection = 'general' | 'admin';
@@ -54,29 +51,18 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   return (
     <header className="border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md sticky top-0 z-30 transition-colors duration-200">
-      {/* Top Bar: Brand, Search, AI, and Section Switcher */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2.5 flex items-center justify-between gap-2 sm:gap-3">
-        {/* Brand & Section Switcher */}
-        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          <div className="w-8 h-8 rounded-xl bg-zinc-900 dark:bg-zinc-100 flex items-center justify-center text-emerald-400 dark:text-emerald-600 shadow-sm shrink-0">
-            <CircleDollarSign className="w-4.5 h-4.5" />
-          </div>
-
-          <div className="flex flex-col min-w-0">
-            <span className="font-bold text-xs sm:text-sm tracking-tight text-zinc-900 dark:text-zinc-100 font-heading truncate">
-              Namay&apos;s Sales Tracker
-            </span>
-          </div>
-
-          {/* Top-level Section Switcher (General vs Admin) */}
-          <div className="ml-1 sm:ml-4 bg-zinc-100 dark:bg-zinc-900 p-0.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800 flex items-center shrink-0">
+      {/* Top Bar: Navigation & Action Controls */}
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2.5 flex items-center justify-between gap-3">
+        {/* Left: Section Switcher (General vs Admin) */}
+        <div className="flex items-center gap-2">
+          <div className="bg-zinc-100 dark:bg-zinc-900 p-0.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800 flex items-center shrink-0">
             <button
               type="button"
               onClick={() => {
                 onClearSelectedClient();
                 onSectionChange('general');
               }}
-              className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+              className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
                 section === 'general'
                   ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs'
                   : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
@@ -90,21 +76,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClearSelectedClient();
                 onSectionChange('admin');
               }}
-              className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-lg transition-all flex items-center gap-1 cursor-pointer ${
+              className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
                 section === 'admin'
                   ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs'
                   : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
               }`}
             >
-              <Shield className="w-3 h-3 text-zinc-400" />
+              <Shield className="w-3.5 h-3.5 text-zinc-400" />
               <span>Admin</span>
             </button>
           </div>
         </div>
 
-        {/* Action Controls: Theme Toggle, Search, AI Assistant, Namay Avatar */}
+        {/* Right: Theme Toggle, Search, and AI Assistant */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          {/* Dark / Light Mode Toggle */}
           <motion.button
             type="button"
             whileTap={{ scale: 0.92 }}
@@ -123,8 +108,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={onOpenSearch}
-            className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 text-xs text-zinc-500 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100 border border-zinc-200/80 dark:border-zinc-800 rounded-xl transition-colors cursor-pointer"
-            title="Global Search (Press to search clients, leads, orders)"
+            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 text-xs text-zinc-500 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100 border border-zinc-200/80 dark:border-zinc-800 rounded-xl transition-colors cursor-pointer"
+            title="Search clients, leads, orders..."
           >
             <Search className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Search...</span>
@@ -134,21 +119,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             type="button"
             whileTap={{ scale: 0.96 }}
             onClick={onOpenAiAssistant}
-            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-white bg-zinc-900 hover:bg-black dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white rounded-xl shadow-xs transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-zinc-900 hover:bg-black dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white rounded-xl shadow-xs transition-colors cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5 text-sky-400 dark:text-sky-600" />
-            <span className="hidden sm:inline">Ask AI</span>
+            <span>Ask AI</span>
           </motion.button>
-
-          {/* User profile identifier */}
-          <div className="hidden md:flex items-center gap-2 pl-2 border-l border-zinc-200/80 dark:border-zinc-800">
-            <div className="w-7 h-7 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 flex items-center justify-center text-xs font-bold font-mono">
-              N
-            </div>
-            <div className="text-left text-xs leading-none">
-              <span className="font-semibold text-zinc-900 dark:text-zinc-200 block">Namay</span>
-            </div>
-          </div>
         </div>
       </div>
 

@@ -54,10 +54,10 @@ export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
               <Lock className="w-5 h-5 text-zinc-100" />
             </div>
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 font-heading">
-              NAMAY'S SALES TRACKER
+              SALES TRACKER
             </h1>
             <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
-              Welcome, Namay. Enter master password to unlock your sales hub.
+              Enter master password to unlock your workspace.
             </p>
           </div>
 

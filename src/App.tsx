@@ -38,7 +38,7 @@ import { GlobalSearchModal } from './components/general/GlobalSearchModal';
 import { AdminView } from './components/admin/AdminView';
 import { AddClientForm } from './components/AddClientForm';
 import { AddProspectForm } from './components/AddProspectForm';
-import { NamayWelcomeBanner } from './components/general/NamayWelcomeBanner';
+import { WelcomeBanner } from './components/general/WelcomeBanner';
 
 export default function App() {
   // Theme state: default dark mode
@@ -587,7 +587,7 @@ export default function App() {
                 {/* 1. DASHBOARD */}
                 {generalTab === 'dashboard' && (
                   <div className="space-y-6">
-                    <NamayWelcomeBanner
+                    <WelcomeBanner
                       totalRevenue={totalRevenue}
                       clientsCount={clients.length}
                       prospectsCount={prospects.length}

@@ -32,7 +32,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
     {
       id: 'welcome',
       sender: 'ai',
-      text: "Hello, Namay. I've analyzed your current client accounts, orders, inventory stock, and follow-ups. Ask me anything about pipeline opportunities, website upsells, or NFC review card pitches.",
+      text: "Hello. I've analyzed your current client accounts, orders, inventory stock, and follow-ups. Ask me anything about pipeline opportunities, website upsells, or NFC review card pitches.",
     },
   ]);
   const [inputQuery, setInputQuery] = useState('');
@@ -135,7 +135,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 font-heading">
-                      Namay&apos;s AI Sales Assistant
+                      AI Sales Assistant
                     </h3>
                     <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
                       Grounded on your live clients, orders &amp; pipeline
@@ -190,7 +190,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
                 {isLoading && (
                   <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 py-2">
                     <Bot className="w-4 h-4 animate-pulse text-[#0071e3]" />
-                    <span>Namay&apos;s AI is reviewing your accounts...</span>
+                    <span>AI is analyzing your accounts...</span>
                   </div>
                 )}
               </div>

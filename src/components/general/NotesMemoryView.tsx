@@ -185,7 +185,7 @@ export const NotesMemoryView: React.FC<NotesMemoryViewProps> = ({
               key={n.id}
               className={`p-5 bg-white dark:bg-zinc-900 rounded-2xl border transition-colors shadow-xs flex flex-col justify-between ${
                 n.is_pinned
-                  ? 'border-zinc-900/40 dark:border-zinc-600 bg-zinc-50/40 dark:bg-zinc-850/60'
+                  ? 'border-zinc-900/40 dark:border-zinc-600 bg-zinc-50/40 dark:bg-zinc-800/60'
                   : 'border-zinc-200/80 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
               }`}
             >

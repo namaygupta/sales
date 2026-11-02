@@ -142,7 +142,7 @@ export function generateLocalQueryAnswer(query: string, context: BusinessContext
   }
 
   // 5. Default executive overview
-  return `### 📊 Executive Sales Advisory for Namay
+  return `### 📊 Executive Sales Advisory
 
 - **Pipeline Snapshot**: You currently have **${totalClients} client accounts** with **$${totalRevenue.toLocaleString()}** in tracked gross revenue.
 - **Top Strategy**: Focus on two-touch closes—reach out to any one-time flat buyers with a review card bundle offer, and follow up with leads in "Follow Up" status within 48 hours of your first pitch.

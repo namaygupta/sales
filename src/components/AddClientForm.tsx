@@ -228,7 +228,7 @@ export const AddClientForm: React.FC<AddClientFormProps> = ({
                   </div>
 
                   {/* Micro Stepper for Customization */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-zinc-850 p-3 rounded-lg border border-zinc-200/70 dark:border-zinc-700 text-xs">
+                  <div className="flex flex-wrap items-center justify-between gap-3 bg-zinc-50 dark:bg-zinc-800/80 p-3 rounded-lg border border-zinc-200/80 dark:border-zinc-700 text-xs">
                     <label className="flex items-center gap-1.5 font-medium cursor-pointer text-zinc-800 dark:text-zinc-200">
                       <input
                         type="checkbox"

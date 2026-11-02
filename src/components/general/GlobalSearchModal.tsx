@@ -142,7 +142,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
         <div className="max-h-96 overflow-y-auto p-2 divide-y divide-zinc-100 dark:divide-zinc-800 text-xs">
           {!results ? (
             <div className="py-8 text-center text-zinc-400 dark:text-zinc-500 text-xs">
-              Type keywords to search across Namay&apos;s records.
+              Type keywords to search across all clients, orders, and leads.
             </div>
           ) : results.totalCount === 0 ? (
             <div className="py-8 text-center text-zinc-400 dark:text-zinc-500 text-xs">

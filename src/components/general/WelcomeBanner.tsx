@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Sparkles, Plus, UserPlus, PhoneCall, ArrowUpRight, TrendingUp, Globe, CreditCard } from 'lucide-react';
 import { formatCurrency } from '../../lib/calculations';
 
-interface NamayWelcomeBannerProps {
+interface WelcomeBannerProps {
   totalRevenue: number;
   clientsCount: number;
   prospectsCount: number;
@@ -16,7 +16,7 @@ interface NamayWelcomeBannerProps {
   onNavigateToTab: (tab: string) => void;
 }
 
-export const NamayWelcomeBanner: React.FC<NamayWelcomeBannerProps> = ({
+export const WelcomeBanner: React.FC<WelcomeBannerProps> = ({
   totalRevenue,
   clientsCount,
   prospectsCount,
@@ -47,7 +47,7 @@ export const NamayWelcomeBanner: React.FC<NamayWelcomeBannerProps> = ({
         <div className="space-y-2 max-w-2xl">
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-semibold tracking-wider uppercase text-sky-600 dark:text-sky-400 font-mono">
-              Founder Dashboard
+              Overview
             </span>
             <span className="text-zinc-300 dark:text-zinc-700">·</span>
             <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
@@ -56,11 +56,11 @@ export const NamayWelcomeBanner: React.FC<NamayWelcomeBannerProps> = ({
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 font-heading">
-            {getGreeting()}, Namay 👋
+            {getGreeting()}
           </h1>
 
           <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
-            Welcome back to your workspace. Here is a pulse on your custom website builds and Google NFC review cards today.
+            Live metrics on website builds, NFC review cards, and client pipeline accounts.
           </p>
 
           {/* Quick Metrics Bar */}

@@ -265,7 +265,7 @@ export const ClientDetailView: React.FC<ClientDetailViewProps> = ({
                 stats.orders.map((order, idx) => (
                   <tr
                     key={order.id}
-                    className={`border-b border-zinc-100 dark:border-zinc-800/80 ${idx % 2 === 1 ? 'bg-zinc-50/40 dark:bg-zinc-850/40' : 'bg-white dark:bg-zinc-900'}`}
+                    className={`border-b border-zinc-100 dark:border-zinc-800/80 ${idx % 2 === 1 ? 'bg-zinc-50/40 dark:bg-zinc-800/40' : 'bg-white dark:bg-zinc-900'}`}
                   >
                     <td className="p-3.5 border-r border-zinc-100 dark:border-zinc-800 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300">
                       {order.order_date || 'N/A'}

@@ -283,7 +283,7 @@ export const ClientsTable: React.FC<ClientsTableProps> = ({
                   onClick={() => onSelectClient(client.id)}
                   className={`border-b border-zinc-100 dark:border-zinc-800/80 transition-colors cursor-pointer ${
                     idx % 2 === 1
-                      ? 'bg-zinc-50/40 dark:bg-zinc-850/40'
+                      ? 'bg-zinc-50/40 dark:bg-zinc-800/40'
                       : 'bg-white dark:bg-zinc-900'
                   } hover:bg-zinc-100/60 dark:hover:bg-zinc-800/70`}
                 >
