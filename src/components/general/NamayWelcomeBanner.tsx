@@ -40,13 +40,9 @@ export const NamayWelcomeBanner: React.FC<NamayWelcomeBannerProps> = ({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-      className="relative overflow-hidden rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white/90 dark:bg-zinc-900/80 backdrop-blur-md p-5 sm:p-6 shadow-sm"
+      className="relative rounded-3xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-900 p-5 sm:p-6 shadow-sm"
     >
-      {/* Ambient background glow in dark mode */}
-      <div className="absolute -right-20 -top-20 w-72 h-72 bg-sky-500/10 dark:bg-sky-500/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -left-20 -bottom-20 w-72 h-72 bg-indigo-500/10 dark:bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         {/* Left: Greeting & Friendly Tone */}
         <div className="space-y-2 max-w-2xl">
           <div className="flex items-center gap-2">
@@ -134,10 +130,10 @@ export const NamayWelcomeBanner: React.FC<NamayWelcomeBannerProps> = ({
             type="button"
             whileTap={{ scale: 0.97 }}
             onClick={onOpenAiAssistant}
-            className="px-3.5 py-2 bg-gradient-to-r from-sky-500/10 to-indigo-500/10 hover:from-sky-500/20 hover:to-indigo-500/20 text-sky-700 dark:text-sky-300 text-xs font-semibold rounded-xl border border-sky-300/60 dark:border-sky-500/30 flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+            className="px-3.5 py-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-semibold rounded-xl border border-zinc-200/80 dark:border-zinc-700 flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
           >
-            <Sparkles className="w-3.5 h-3.5 text-sky-500" />
-            <span>Ask Namay's AI Strategist</span>
+            <Sparkles className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400" />
+            <span>AI Assistant</span>
           </motion.button>
         </div>
       </div>

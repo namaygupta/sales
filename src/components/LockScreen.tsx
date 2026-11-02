@@ -40,10 +40,6 @@ export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-[#f5f5f7] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 p-4 antialiased selection:bg-zinc-900 dark:selection:bg-zinc-700 selection:text-white transition-colors duration-200">
-      {/* Background subtle radial ambient glow */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
-        <div className="w-[500px] h-[500px] bg-sky-500/5 dark:bg-sky-500/10 rounded-full blur-3xl" />
-      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 14 }}

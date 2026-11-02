@@ -36,6 +36,8 @@ jobs:
         run: npx vite build
         env:
           VITE_PASSWORD: "MarcusAurelius$1806"
+          VITE_SUPABASE_URL: "https://lxukabtecfavgcfuyfed.supabase.co"
+          VITE_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx4dWthYnRlY2ZhdmdjZnV5ZmVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1NzQzNjAsImV4cCI6MjEwOTE1MDM2MH0.OdiMiMiIkjWHHB_aDw_dQEtJ68aOqnFstCVFjmpo2Kw"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
