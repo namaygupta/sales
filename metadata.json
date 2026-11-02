@@ -1,0 +1,8 @@
+{
+  "name": "Client & Sales Tracker",
+  "description": "Local-first client, order, and prospect tracker for web design and NFC accessory sales.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
